@@ -1,19 +1,17 @@
 #!/bin/bash
 #
 # NAME
-#         build-watch - build and run a project when the source files are updated
+#         build-watch - build a project when the source files are updated
 #
 # SYNOPSYS
-#         ./build-watch BUILD-COMMAND RUN-COMMAND
+#         ./build-watch COMMAND
 
 STATE=`mktemp -d`
 touch $STATE/src
 touch $STATE/build
-touch $STATE/executable
-touch $STATE/run
 
 function set-state {
-	find . -type -f -not -path '*/\.*' -printf "%T+\t%p\n" | md5sum > $STATE/$1
+	find . -type f -not -path '*/\.*' -printf "%T+\t%p\n" | md5sum > $STATE/$1
 }
 
 function diff-state {
@@ -21,17 +19,22 @@ function diff-state {
 	return 1
 }
 
+function print-success {
+	echo -e "build-watch: \e[32mBuild passed.\e[39m";
+}
+
+function print-error {
+	echo -e "build-watch: \e[31mBuild failed !\e[39m";
+}
+
 while true
 do 
 	set-state src
 
 	if diff-state src build; then
-		echo "$1"
-		set-state build && $1 && set-state executable
-	elif diff-state executable run; then
-		echo "$2"
-		set-state run   && $2
+		echo "$@"
+		set-state build && $@ && print-success || print-error
 	fi
 
-	sleep 2
+	sleep 1
 done
