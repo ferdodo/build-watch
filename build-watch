@@ -8,7 +8,7 @@ function set-state {
 }
 
 function diff-state {
-	diff $STATE/$1 $STATE/$2 || return 0
+	cmp -s $STATE/$1 $STATE/$2 || return 0
 	return 1
 }
 
