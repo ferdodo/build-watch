@@ -13,7 +13,7 @@ touch $STATE/executable
 touch $STATE/run
 
 function set-state {
-	find . -not -path '*/\.*' -printf "%T+\t%p\n" | md5sum > $STATE/$1
+	find . -type -f -not -path '*/\.*' -printf "%T+\t%p\n" | md5sum > $STATE/$1
 }
 
 function diff-state {
