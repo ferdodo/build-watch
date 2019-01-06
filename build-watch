@@ -1,11 +1,4 @@
 #!/bin/bash
-#
-# NAME
-#         build-watch - build a project when the source files are updated
-#
-# SYNOPSYS
-#         ./build-watch COMMAND
-
 STATE=`mktemp -d`
 touch $STATE/src
 touch $STATE/build
