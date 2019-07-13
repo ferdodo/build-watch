@@ -5,5 +5,12 @@ Build a project when the source files are updated.
 * Move to your project main directory containing the source files.
 * Run `build-watch <BUILD-COMMAND>`.
 
-## Key concept : source file state
-Every files in the build-watch directory is considered as a source file. This is intended as a clean way to structure a project, and keep source files separated from binaries and other intermediary built files. If a file is generated within the source files during the build step, the project will infinitly rebuild.
+## What is whatched?
+* Files name and location.
+* Files permissions (read, write, execution).
+* Files last modification time.
+
+## What is not watched?
+* Hidden files.
+* Directories.
+* Files owner and group.
