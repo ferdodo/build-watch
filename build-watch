@@ -4,7 +4,7 @@ touch $STATE/src
 touch $STATE/build
 
 function set-state {
-	find . -type f -not -path '*/\.*' -printf "%T+\t%p\n" | md5sum > $STATE/$1
+	find . -type f -not -path '*/\.*' -printf "%T+\t%M\t%p\n" | md5sum > $STATE/$1
 }
 
 function diff-state {
