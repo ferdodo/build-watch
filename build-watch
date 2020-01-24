@@ -27,7 +27,7 @@ do
 	if diff-state src build; then
 		echo "$@"
 		StartDate=$(date -u +"%s")
-		set-state build && $@ && print-success "$StartDate" || print-error
+		set-state build && $@ && print-success || print-error
 		FinalDate=$(date -u +"%s")
 		date -u -d "0 $FinalDate sec - $StartDate sec" +"in %-M minutes %-S seconds"
 	fi
