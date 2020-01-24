@@ -13,11 +13,11 @@ function diff-state {
 }
 
 function print-success {
-	echo -e "build-watch: \e[32mBuild passed.\e[39m";
+	printf "build-watch: \e[32mBuild passed \e[39m";
 }
 
 function print-error {
-	echo -e "build-watch: \e[31mBuild failed !\e[39m";
+	printf "build-watch: \e[31mBuild failed \e[39m";
 }
 
 while true
@@ -26,7 +26,10 @@ do
 
 	if diff-state src build; then
 		echo "$@"
-		set-state build && $@ && print-success || print-error
+		StartDate=$(date -u +"%s")
+		set-state build && $@ && print-success "$StartDate" || print-error
+		FinalDate=$(date -u +"%s")
+		date -u -d "0 $FinalDate sec - $StartDate sec" +"in %-M minutes %-S seconds"
 	fi
 
 	sleep 1
